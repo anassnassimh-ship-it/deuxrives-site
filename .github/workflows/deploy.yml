@@ -14,9 +14,9 @@ jobs:
         run: |
           mkdir out
           unzip -q site-deuxrives.zip -d out
-          sed -i 's|Hébergeur&nbsp;: OVH SAS, 2 rue Kellermann, 59100 Roubaix, France.|Hébergeur\&nbsp;: GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis. Tél.\&nbsp;: +1\&nbsp;877\&nbsp;448\&nbsp;4820.|' out/index.html
+          grep -q '4820' out/index.html || sed -i 's|San Francisco, CA 94107, États-Unis.|San Francisco, CA 94107, États-Unis. Tél.\&nbsp;: +1\&nbsp;877\&nbsp;448\&nbsp;4820.|' out/index.html
           grep -q 'GitHub, Inc.' out/index.html
-          echo www.deuxriveshospitality.com > out/CNAME
+          [ -f out/CNAME ] || echo www.deuxriveshospitality.com > out/CNAME
           touch out/.nojekyll
       - name: Publier sur la branche site
         run: |
